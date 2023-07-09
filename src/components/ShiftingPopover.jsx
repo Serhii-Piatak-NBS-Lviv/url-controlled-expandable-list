@@ -55,9 +55,9 @@ const SplashDescription = ({name, title, description, simpleGridRef, gridItemRef
           });
     }; 
 
-    function calcCardPosition() {
+    function calcCardPosition(cardRef) {
         if (cardRef.current) {
-          return cardRef.current.getBoundingClientRect().left - simpleGridRef.current.getBoundingClientRect().left;
+            return cardRef.current.offsetLeft;
         }
         return null;
     }

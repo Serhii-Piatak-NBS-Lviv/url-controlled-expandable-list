@@ -15,7 +15,7 @@ import useURLParam from '../hooks/useURLParam';
 
 const cardWrapper = css`
     border: solid 1px red !important;
-`
+`;
 
 const arrow = css`
     position: absolute;
@@ -26,7 +26,7 @@ const arrow = css`
     border-top: solid 1px red;
     background: #fff;
     transform: rotate(45deg);
-`
+`;
 
 const SplashDescription = ({name, title, description, simpleGridRef, gridItemRef}) => {
     const toast = useToast();
@@ -36,8 +36,8 @@ const SplashDescription = ({name, title, description, simpleGridRef, gridItemRef
 
     useEffect(() => {
         setCardPosition({
-            arrowPosition: calcArrowPosition(gridItemRef),
-            toLeft: calcCardPosition(cardRef)
+            arrowPosition: gridItemRef.current ? (gridItemRef.current.offsetLeft + (gridItemRef.current.offsetWidth / 2) - 10) : null, //calcArrowPosition(gridItemRef),
+            toLeft: cardRef.current.offsetLeft || null //calcCardPosition(cardRef)
         })
       }, []);
     
@@ -55,19 +55,19 @@ const SplashDescription = ({name, title, description, simpleGridRef, gridItemRef
           });
     }; 
 
-    function calcCardPosition(cardRef) {
-        if (cardRef.current) {
-            return cardRef.current.offsetLeft;
-        }
-        return null;
-    }
+    // function calcCardPosition(cardRef) {
+    //     if (cardRef.current) {
+    //         return cardRef.current.offsetLeft;
+    //     }
+    //     return null;
+    // }
 
-    function calcArrowPosition(gridItemRef) {
-        if(gridItemRef.current) {
-            return gridItemRef.current.offsetLeft + (gridItemRef.current.offsetWidth / 2) - 10;
-        }
-        return null;
-    }
+    // function calcArrowPosition(gridItemRef) {
+    //     if(gridItemRef.current) {
+    //         return gridItemRef.current.offsetLeft + (gridItemRef.current.offsetWidth / 2) - 10;
+    //     }
+    //     return null;
+    // }
 
   return(
     <Card 

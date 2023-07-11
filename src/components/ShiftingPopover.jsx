@@ -8,6 +8,8 @@ import { useToast } from '@chakra-ui/react';
 import { selectItem } from './sftpopoverSlice';
 import useURLParam from '../hooks/useURLParam';
 
+// ToDo: put a hook to monitor resizing of Simple Grid
+
 /**
 * @author
 * @function ShiftingPopover
@@ -79,7 +81,7 @@ const SplashDescription = ({name, title, description, simpleGridRef, gridItemRef
         exit={{ opacity: 0, height: 0 }}
         transition={{ duration: 0.5 }}        
         ref={cardRef}
-        w={simpleGridRef.current.offsetWidth ? `${simpleGridRef.current.offsetWidth}px` : ''}
+        w={simpleGridRef.current?.offsetWidth ? `${simpleGridRef.current.offsetWidth}px` : ''}
         mt='10px'
         right={ cardPosition.toLeft ? `${cardPosition.toLeft}px` : ''}
     >

@@ -70,7 +70,8 @@ const SplashDescription = ({name, title, description, simpleGridRef, gridItemRef
     }
 
   return(
-    <Card /*w={[268, 320, 380, 430, 430, 568]} */
+    <Card 
+        // w={[268, 320, 380, 430, 430, 568]}
         className={cardWrapper}
         as={motion.div}
         initial={{ opacity: 0, height: 0 }}
@@ -78,8 +79,8 @@ const SplashDescription = ({name, title, description, simpleGridRef, gridItemRef
         exit={{ opacity: 0, height: 0 }}
         transition={{ duration: 0.5 }}        
         ref={cardRef}
-        w={simpleGridRef.current?.offsetWidth ? `${simpleGridRef.current.offsetWidth}px` : ''}
-        mt={30}
+        w={simpleGridRef.current.offsetWidth ? `${simpleGridRef.current.offsetWidth}px` : ''}
+        mt='10px'
         right={ cardPosition.toLeft ? `${cardPosition.toLeft}px` : ''}
     >
         <span 

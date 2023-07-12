@@ -2,13 +2,10 @@ import React, {useState, useRef, useEffect } from 'react';
 import { css } from '@emotion/css';
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, GridItem, Card, CardHeader, CardBody, CardFooter, Heading, Text, Divider,/* position */} from '@chakra-ui/react';
-// import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { Button, GridItem, Card, CardHeader, CardBody, CardFooter, Heading, Text, Divider} from '@chakra-ui/react';
 import { useToast } from '@chakra-ui/react';
 import { selectItem } from './sftpopoverSlice';
 import useURLParam from '../hooks/useURLParam';
-
-// ToDo: put a hook to monitor resizing of Simple Grid
 
 /**
 * @author
@@ -34,13 +31,17 @@ const SplashDescription = ({name, title, description, simpleGridRef, gridItemRef
     const toast = useToast();
     const cardRef = useRef();  
     
-    const [cardPosition, setCardPosition] = useState({toLeft: null, arrowPosition: null})
+    const [cardPosition, setCardPosition] = useState({toLeft: null, arrowPosition: null});
+    const [width, setWidth] = useState(null);
 
     useEffect(() => {
-        setCardPosition({
-            arrowPosition: gridItemRef.current ? (gridItemRef.current.offsetLeft + (gridItemRef.current.offsetWidth / 2) - 10) : null, //calcArrowPosition(gridItemRef),
-            toLeft: cardRef.current.offsetLeft || null //calcCardPosition(cardRef)
-        })
+        window.addEventListener("resize", () => setCardPlacement());
+        
+        setCardPlacement();
+        // setCardPosition({
+        //     arrowPosition: gridItemRef.current ? (gridItemRef.current.offsetLeft + (gridItemRef.current.offsetWidth / 2) - 10) : null, //calcArrowPosition(gridItemRef),
+        //     toLeft: cardRef.current.offsetLeft || null //calcCardPosition(cardRef)
+        // })
       }, []);
     
     const handleShare = () => {
@@ -57,6 +58,14 @@ const SplashDescription = ({name, title, description, simpleGridRef, gridItemRef
           });
     }; 
 
+    function setCardPlacement() {
+        setCardPosition({
+            arrowPosition: gridItemRef.current ? (gridItemRef.current.offsetLeft + (gridItemRef.current.offsetWidth / 2) - 10) : null, //calcArrowPosition(gridItemRef),
+            toLeft: gridItemRef.current.offsetLeft - 10 || null //calcCardPosition(cardRef)
+        });
+        setWidth(simpleGridRef.current.offsetWidth);
+    }
+
     // function calcCardPosition(cardRef) {
     //     if (cardRef.current) {
     //         return cardRef.current.offsetLeft;
@@ -72,8 +81,7 @@ const SplashDescription = ({name, title, description, simpleGridRef, gridItemRef
     // }
 
   return(
-    <Card 
-        // w={[268, 320, 380, 430, 430, 568]}
+    <Card
         className={cardWrapper}
         as={motion.div}
         initial={{ opacity: 0, height: 0 }}
@@ -81,7 +89,8 @@ const SplashDescription = ({name, title, description, simpleGridRef, gridItemRef
         exit={{ opacity: 0, height: 0 }}
         transition={{ duration: 0.5 }}        
         ref={cardRef}
-        w={simpleGridRef.current?.offsetWidth ? `${simpleGridRef.current.offsetWidth}px` : ''}
+        // w={simpleGridRef.current?.offsetWidth ? `${simpleGridRef.current.offsetWidth}px` : ''}
+        w={width}
         mt='10px'
         right={ cardPosition.toLeft ? `${cardPosition.toLeft}px` : ''}
     >
@@ -105,7 +114,6 @@ const SplashDescription = ({name, title, description, simpleGridRef, gridItemRef
 
 
 const ShiftingPopover = ({name, title, description, simpleGridRef}) => {
-    // const [parent] = useAutoAnimate();
     const dispatch = useDispatch();
     
     const gridItemRef = useRef();
@@ -132,9 +140,8 @@ const ShiftingPopover = ({name, title, description, simpleGridRef}) => {
             colorScheme='teal' 
             size='lg' w={'100%'} 
             m='3%' 
-            onClick={reveal} /* ref={parent} */
-        >
-            {name}
+            onClick={reveal}> 
+            {name} 
         </Button>
         { isOpen && <SplashDescription 
             name={name} 

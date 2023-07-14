@@ -36,12 +36,7 @@ const SplashDescription = ({name, title, description, simpleGridRef, gridItemRef
 
     useEffect(() => {
         window.addEventListener("resize", () => setCardPlacement());
-        
         setCardPlacement();
-        // setCardPosition({
-        //     arrowPosition: gridItemRef.current ? (gridItemRef.current.offsetLeft + (gridItemRef.current.offsetWidth / 2) - 10) : null, //calcArrowPosition(gridItemRef),
-        //     toLeft: cardRef.current.offsetLeft || null //calcCardPosition(cardRef)
-        // })
       }, []);
     
     const handleShare = () => {
@@ -60,25 +55,11 @@ const SplashDescription = ({name, title, description, simpleGridRef, gridItemRef
 
     function setCardPlacement() {
         setCardPosition({
-            arrowPosition: gridItemRef.current ? (gridItemRef.current.offsetLeft + (gridItemRef.current.offsetWidth / 2) - 10) : null, //calcArrowPosition(gridItemRef),
-            toLeft: gridItemRef.current.offsetLeft - 10 || null //calcCardPosition(cardRef)
+            arrowPosition: gridItemRef.current ? (gridItemRef.current.offsetLeft + (gridItemRef.current.offsetWidth / 2) - 10) : null,
+            toLeft: gridItemRef.current.offsetLeft - 10 || null
         });
         setWidth(simpleGridRef.current.offsetWidth);
     }
-
-    // function calcCardPosition(cardRef) {
-    //     if (cardRef.current) {
-    //         return cardRef.current.offsetLeft;
-    //     }
-    //     return null;
-    // }
-
-    // function calcArrowPosition(gridItemRef) {
-    //     if(gridItemRef.current) {
-    //         return gridItemRef.current.offsetLeft + (gridItemRef.current.offsetWidth / 2) - 10;
-    //     }
-    //     return null;
-    // }
 
   return(
     <Card
@@ -89,7 +70,6 @@ const SplashDescription = ({name, title, description, simpleGridRef, gridItemRef
         exit={{ opacity: 0, height: 0 }}
         transition={{ duration: 0.5 }}        
         ref={cardRef}
-        // w={simpleGridRef.current?.offsetWidth ? `${simpleGridRef.current.offsetWidth}px` : ''}
         w={width}
         mt='10px'
         right={ cardPosition.toLeft ? `${cardPosition.toLeft}px` : ''}

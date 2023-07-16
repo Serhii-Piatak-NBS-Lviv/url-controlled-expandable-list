@@ -1,4 +1,5 @@
 import React, {useState, useRef, useEffect } from 'react';
+import { CloseIcon } from '@chakra-ui/icons'
 import { css } from '@emotion/css';
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,6 +14,7 @@ import useURLParam from '../hooks/useURLParam';
 **/
 
 const cardWrapper = css`
+    position: relative;
     border: solid 1px red !important;
 `;
 
@@ -30,6 +32,7 @@ const arrow = css`
 const SplashDescription = ({name, title, description, simpleGridRef, gridItemRef}) => {
     const toast = useToast();
     const cardRef = useRef();  
+    const dispatch = useDispatch();
     
     const [cardPosition, setCardPosition] = useState({toLeft: null, arrowPosition: null});
     const [width, setWidth] = useState(null);
@@ -61,6 +64,12 @@ const SplashDescription = ({name, title, description, simpleGridRef, gridItemRef
         setWidth(simpleGridRef.current.offsetWidth);
     }
 
+    const closePopup = () => {
+        const urlWithoutQuery = window.location.href.split('?')[0];
+        window.history.replaceState({}, document.title, urlWithoutQuery);
+        dispatch(selectItem(''));
+    }
+
   return(
     <Card
         className={cardWrapper}
@@ -78,6 +87,9 @@ const SplashDescription = ({name, title, description, simpleGridRef, gridItemRef
             className={arrow}
             style={{left: `${cardPosition.arrowPosition ? cardPosition.arrowPosition : 0}px`}}
         />
+        <Button position='absolute' right='20px' top='20px' onClick={() => closePopup()}>
+            <CloseIcon/>
+        </Button>
         <CardHeader>
             <Heading size='md'>{title}</Heading>
         </CardHeader>
@@ -92,7 +104,6 @@ const SplashDescription = ({name, title, description, simpleGridRef, gridItemRef
    )
 }
 
-
 const ShiftingPopover = ({name, title, description, simpleGridRef}) => {
     const dispatch = useDispatch();
     
@@ -102,7 +113,7 @@ const ShiftingPopover = ({name, title, description, simpleGridRef}) => {
     if (isInvokedAsParam) dispatch(selectItem(name));
 
     const selectedLetter = useSelector((state) => state.sftpopover.item_id);
-    const isOpen = (selectedLetter === name);
+    const isOpen = (selectedLetter === name);    
 
     
     const reveal = () => {

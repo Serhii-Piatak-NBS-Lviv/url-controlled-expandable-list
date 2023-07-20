@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/url-controlled-expandable-list/static/css/main.e6c13ad2.css",
+    "main.js": "/url-controlled-expandable-list/static/js/main.1d94d3d0.js",
+    "index.html": "/url-controlled-expandable-list/index.html",
+    "main.e6c13ad2.css.map": "/url-controlled-expandable-list/static/css/main.e6c13ad2.css.map",
+    "main.1d94d3d0.js.map": "/url-controlled-expandable-list/static/js/main.1d94d3d0.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.1d94d3d0.js"
+  ]
+}

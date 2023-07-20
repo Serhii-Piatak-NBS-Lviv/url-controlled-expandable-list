@@ -38,9 +38,16 @@ const SplashDescription = ({name, title, description, simpleGridRef, gridItemRef
     const [width, setWidth] = useState(null);
 
     useEffect(() => {
+        function setCardPlacement() {
+            setCardPosition({
+                arrowPosition: gridItemRef.current ? (gridItemRef.current.offsetLeft + (gridItemRef.current.offsetWidth / 2) - 10) : null,
+                toLeft: gridItemRef.current.offsetLeft - 10 || null
+            });
+            setWidth(simpleGridRef.current.offsetWidth);
+        };
         window.addEventListener("resize", () => setCardPlacement());
         setCardPlacement();
-      }, []);
+      }, [gridItemRef, simpleGridRef]);
     
     const handleShare = () => {
         const browserURL = new URL(window.location.href);
@@ -55,14 +62,6 @@ const SplashDescription = ({name, title, description, simpleGridRef, gridItemRef
             isClosable: true,
           });
     }; 
-
-    function setCardPlacement() {
-        setCardPosition({
-            arrowPosition: gridItemRef.current ? (gridItemRef.current.offsetLeft + (gridItemRef.current.offsetWidth / 2) - 10) : null,
-            toLeft: gridItemRef.current.offsetLeft - 10 || null
-        });
-        setWidth(simpleGridRef.current.offsetWidth);
-    }
 
     const closePopup = () => {
         const urlWithoutQuery = window.location.href.split('?')[0];
